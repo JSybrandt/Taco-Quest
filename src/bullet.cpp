@@ -8,7 +8,7 @@ Bullet::Bullet(){
 void Bullet::update(float ts){
   if(isActive){
     move(velocity);
-    // isActive = this->inside(game->getScreenRect());
+    isActive = this->inside(game->getScreenRect());
   }
 }
 

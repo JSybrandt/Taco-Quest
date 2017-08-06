@@ -4,31 +4,36 @@ using namespace Game_ns;
 
 Game::Game():settings(Gc::SETTINGS_FILE){
   isPaused = false;
+  bullets = new Bullet[NUM_BULLETS];
   safeLoad(blockTex, Gc::IMG_BLOCK);
   safeLoad(boltTex, Gc::IMG_BOLT);
   safeLoad(tacoTex, Gc::IMG_TACO);
-  player.setTexture(tacoTex);
-  player.init(this);
-  initActors(bullets, NUM_BULLETS, boltTex);
-  cout << "FINISHED INIT" << endl;
+
+  player.init(this, tacoTex);
+  for(unsigned int i=0; i<NUM_BULLETS; ++i)
+    bullets[i].init(this, boltTex);
+}
+
+Game::~Game(){
+  delete [] bullets;
 }
 
 void Game::update(Time delta){
   if(isPaused)
     return;
-
   float ts = delta.asSeconds();
   player.update(ts);
-  for(unsigned int i = 0; i < NUM_BULLETS; ++i)
+  for(unsigned int i = 0; i < NUM_BULLETS; ++i){
     bullets[i].update(ts);
-
-  cout << "UPDATE" << endl;
+  }
 }
 
 void Game::spawnBullet(Vector2f loc, Vector2f vel){
-  Bullet* newBul = (Bullet*) getFirstUnactivated(bullets, NUM_BULLETS);
-  if(newBul){
-    newBul->spawn(loc, vel);
+  for(unsigned int i=0; i<NUM_BULLETS; ++i){
+    if(!bullets[i].isActive){
+      bullets[i].spawn(loc, vel);
+      break;
+    }
   }
 }
 
@@ -64,20 +69,4 @@ void Game::safeLoad(Texture & t, string path){
 
 Rect<float> Game::getScreenRect() const{
   return Rect<float>(0, 0, screenWidth, screenHeight);
-}
-
-Actor* Game::getFirstUnactivated(Actor* arr, unsigned int length){
-  for(unsigned int i = 0; i < length; ++i){
-    if(!arr[i].isActive)
-      return &arr[i];
-  }
-  cerr << "Failed to find an unactivated item." << endl;
-  return nullptr;
-}
-
-void Game::initActors(Actor* arr, unsigned int length, Texture& tex){
-  for(unsigned int i=0; i < length; ++i){
-    arr[i].setTexture(tex);
-    arr[i].init(this);
-  }
 }

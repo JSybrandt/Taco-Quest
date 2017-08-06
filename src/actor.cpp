@@ -2,12 +2,14 @@
 
 #include"game.h"
 
-void Actor::init(Game* game){
+void Actor::init(Game* game, const Texture& texture){
   this->game = game;
+  this->isInit = true;
+  setTexture(texture);
 }
 
 void Actor::draw(RenderWindow & window) const{
-  if(isActive){
+  if(isActive && isInit){
     window.draw(this->sprite);
   }
 }
@@ -31,7 +33,7 @@ Rect<float> Actor::getRect() const{
 }
 
 Vector2f Actor::getPos() const{
-  return sprite.getOrigin();
+  return sprite.getPosition();
 }
 
 void Actor::setPos(Vector2f pos){

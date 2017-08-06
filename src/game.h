@@ -19,6 +19,7 @@ namespace Game_ns{
 class Game{
 public:
   Game();
+  ~Game();
   void update(Time delta);
   void draw(RenderWindow& window);
   void setWindowSize(unsigned int width, unsigned int height);
@@ -33,11 +34,9 @@ private:
   bool isPaused;
   unsigned int screenWidth, screenHeight;
   Settings settings;
-  Actor* getFirstUnactivated(Actor* arr, unsigned int length);
-  void initActors(Actor* arr, unsigned int length, Texture& tex);
 
   Texture blockTex, tacoTex, boltTex;
   Player player;
-  Bullet bullets[Game_ns::NUM_BULLETS];
+  Bullet* bullets;
 
 };

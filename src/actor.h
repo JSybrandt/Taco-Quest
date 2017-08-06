@@ -13,7 +13,7 @@ class Game;
 class Actor{
 public:
   Actor(){game=nullptr;}
-  void init(Game* game);
+  void init(Game* game, const Texture& texture);
   void draw(RenderWindow & window) const;
   virtual void update(float ts) = 0;
   Sprite& getSprite();
@@ -25,9 +25,10 @@ public:
   void move(Vector2f pos);
   template <class T>
   bool inside(Rect<T> r){
-    return r.contains(sprite.getOrigin());
+    return r.contains(sprite.getPosition());
   };
   bool isActive;
+  bool isInit;
 private:
   Sprite sprite;
 protected:
