@@ -2,9 +2,11 @@
 namespace Gc {
   const int SCREEN_WIDTH = 800;
   const int SCREEN_HEIGHT = 600;
-  const char* TITLE = "My Game";
+  const char* TITLE = "Taco Quest";
   const char* SETTINGS_FILE = "./settings.txt";
   const char* IMG_BLOCK = "./res/block.png";
+  const char* IMG_BOLT = "./res/bolt.png";
+  const char* IMG_TACO = "./res/taco.png";
   const Vector2<float> UP(0, -1);
   const Vector2<float> DOWN(0, 1);
   const Vector2<float> LEFT(-1, 0);

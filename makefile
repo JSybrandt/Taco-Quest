@@ -1,48 +1,27 @@
 CC=g++
-LB=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-CF=-g -Wall
-OB=./obj
-SR=./src
-BN=./bin
-GAME_NAME=game
+GAME_NAME=tacoQuest
 
 # $@ - target
 # $< - first dep
 # $^ - all dep
 
+CPP_FILES := $(wildcard ./src/*.cpp)
+OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
+LD_FLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+CC_FLAGS := -g -Wall -MMD
+
+
 all: dirs $(GAME_NAME)
 
-$(GAME_NAME): $(BN)/$(GAME_NAME)
-	ln -sf $<
+$(GAME_NAME): $(OBJ_FILES)
+	$(CC) $(LD_FLAGS) -o $@ $^
 
-$(BN)/$(GAME_NAME): $(SR)/main.cpp $(OB)/game.o $(OB)/settings.o $(OB)/constants.o $(OB)/player.o $(OB)/actor.o $(OB)/bullet.o
-	$(CC) $(CF) -o $@ $^ $(LB)
-
-$(OB)/game.o: $(SR)/game.cpp $(OB)/settings.o
-	$(CC) $(CF) -c $^ $(LB) -o $@
-
-$(OB)/settings.o: $(SR)/settings.cpp
-	$(CC) $(CF) -c $^ $(LB) -o $@
-
-$(OB)/constants.o: $(SR)/constants.cpp
-	$(CC) $(CF) -c $^ $(LB) -o $@
-
-$(OB)/player.o: $(SR)/player.cpp $(OB)/actor.o
-	$(CC) $(CF) -c $^ $(LB) -o $@
-
-$(OB)/bullet.o: $(SR)/bullet.cpp $(OB)/actor.o
-	$(CC) $(CF) -c $^ $(LB) -o $@
-
-$(OB)/actor.o: $(SR)/actor.cpp
-	$(CC) $(CF) -c $^ $(LB) -o $@
+obj/%.o: src/%.cpp
+	$(CC) $(CC_FLAGS) -c -o $@ $<
 
 dirs:
-	mkdir -p $(OB)
-	mkdir -p $(BN)
+	mkdir -p ./obj
 
 clean:
-	rm -rf $(OB)
-	rm -rf $(BN)
-
-
+	rm -rf ./obj
 

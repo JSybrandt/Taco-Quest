@@ -14,6 +14,8 @@ void Actor::draw(RenderWindow & window) const{
 
 void Actor::setTexture(const Texture& texture){
   sprite.setTexture(texture);
+  Rect<float> texBox = sprite.getGlobalBounds();
+  sprite.setOrigin(texBox.width/2, texBox.height/2);
 }
 
 Sprite& Actor::getSprite(){

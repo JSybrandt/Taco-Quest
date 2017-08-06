@@ -5,8 +5,12 @@ using namespace Game_ns;
 Game::Game():settings(Gc::SETTINGS_FILE){
   isPaused = false;
   safeLoad(blockTex, Gc::IMG_BLOCK);
-  player.setTexture(blockTex);
+  safeLoad(boltTex, Gc::IMG_BOLT);
+  safeLoad(tacoTex, Gc::IMG_TACO);
+  player.setTexture(tacoTex);
   player.init(this);
+  initActors(bullets, NUM_BULLETS, boltTex);
+  cout << "FINISHED INIT" << endl;
 }
 
 void Game::update(Time delta){
@@ -17,6 +21,8 @@ void Game::update(Time delta){
   player.update(ts);
   for(unsigned int i = 0; i < NUM_BULLETS; ++i)
     bullets[i].update(ts);
+
+  cout << "UPDATE" << endl;
 }
 
 void Game::spawnBullet(Vector2f loc, Vector2f vel){
@@ -67,4 +73,11 @@ Actor* Game::getFirstUnactivated(Actor* arr, unsigned int length){
   }
   cerr << "Failed to find an unactivated item." << endl;
   return nullptr;
+}
+
+void Game::initActors(Actor* arr, unsigned int length, Texture& tex){
+  for(unsigned int i=0; i < length; ++i){
+    arr[i].setTexture(tex);
+    arr[i].init(this);
+  }
 }

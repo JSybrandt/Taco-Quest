@@ -10,6 +10,7 @@
 
 using namespace sf;
 using std::cerr;
+using std::cout;
 using std::endl;
 
 namespace Game_ns{
@@ -33,8 +34,9 @@ private:
   unsigned int screenWidth, screenHeight;
   Settings settings;
   Actor* getFirstUnactivated(Actor* arr, unsigned int length);
+  void initActors(Actor* arr, unsigned int length, Texture& tex);
 
-  Texture blockTex;
+  Texture blockTex, tacoTex, boltTex;
   Player player;
   Bullet bullets[Game_ns::NUM_BULLETS];
 

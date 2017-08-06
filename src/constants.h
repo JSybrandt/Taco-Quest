@@ -8,6 +8,8 @@ namespace Gc {
  extern const char* TITLE;
  extern const char* SETTINGS_FILE;
  extern const char* IMG_BLOCK;
+ extern const char* IMG_BOLT;
+ extern const char* IMG_TACO;
  extern const Vector2<float> UP;
  extern const Vector2<float> DOWN;
  extern const Vector2<float> LEFT;
