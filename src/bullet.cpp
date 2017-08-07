@@ -21,7 +21,13 @@ void Bullet::spawn(Vector2f pos, Vector2f vel){
 void Bullet::setVel(Vector2f vel){
   velocity = vel;
 }
+
 Vector2f Bullet::getVel(){
   return velocity;
+}
+
+void Bullet::init(Game* game, const Texture& texture, Color color){
+  Actor::init(game, texture);
+  this->getSprite().setColor(color);
 }
 

@@ -4,18 +4,38 @@ using namespace Game_ns;
 
 Game::Game():settings(Gc::SETTINGS_FILE){
   isPaused = false;
-  bullets = new Bullet[NUM_BULLETS];
+  // Data:
+  playerBullets = new Bullet[NUM_BULLETS];
+  enemyBullets = new Bullet[NUM_BULLETS];
+  enemies = new Enemy[NUM_ENEMIES];
+  // Tex:
   safeLoad(blockTex, Gc::IMG_BLOCK);
   safeLoad(boltTex, Gc::IMG_BOLT);
+  boltTex.setSmooth(true);
   safeLoad(tacoTex, Gc::IMG_TACO);
-
+  tacoTex.setSmooth(true);
+  safeLoad(burgerTex, Gc::IMG_BURGER);
+  burgerTex.setSmooth(true);
+  // Init:
   player.init(this, tacoTex);
-  for(unsigned int i=0; i<NUM_BULLETS; ++i)
-    bullets[i].init(this, boltTex);
+  for(unsigned int i=0; i<NUM_BULLETS; ++i){
+    playerBullets[i].init(this, boltTex, Gc::CLR_PLAYER_BULLET);
+    enemyBullets[i].init(this, boltTex, Gc::CLR_ENEMY_BULLET);
+  }
+  for(unsigned int i=0; i<NUM_ENEMIES; ++i){
+    enemies[i].init(this, burgerTex);
+  }
+
+  //spawn
+  for(unsigned int i=0; i<10; ++i){
+    enemies[i].spawn(Vector2f(50*i+200, 50*i+100));
+  }
 }
 
 Game::~Game(){
-  delete [] bullets;
+  delete [] playerBullets;
+  delete [] enemyBullets;
+  delete [] enemies;
 }
 
 void Game::update(Time delta){
@@ -24,14 +44,38 @@ void Game::update(Time delta){
   float ts = delta.asSeconds();
   player.update(ts);
   for(unsigned int i = 0; i < NUM_BULLETS; ++i){
-    bullets[i].update(ts);
+    playerBullets[i].update(ts);
+    enemyBullets[i].update(ts);
+  }
+  for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
+    enemies[i].update(ts);
   }
 }
 
-void Game::spawnBullet(Vector2f loc, Vector2f vel){
+void Game::collisions(){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
-    if(!bullets[i].isActive){
-      bullets[i].spawn(loc, vel);
+    for(unsigned int j=0; j<NUM_ENEMIES; ++j){
+      if(playerBullets[i].checkCollision(enemies[j])){
+        playerBullets[i].die();
+        enemies[j].die();
+      }
+    }
+  }
+}
+
+void Game::spawnPlayerBullet(Vector2f loc, Vector2f vel){
+  for(unsigned int i=0; i<NUM_BULLETS; ++i){
+    if(!playerBullets[i].isActive){
+      playerBullets[i].spawn(loc, vel);
+      break;
+    }
+  }
+}
+
+void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel){
+  for(unsigned int i=0; i<NUM_BULLETS; ++i){
+    if(!enemyBullets[i].isActive){
+      enemyBullets[i].spawn(loc, vel);
       break;
     }
   }
@@ -39,8 +83,13 @@ void Game::spawnBullet(Vector2f loc, Vector2f vel){
 
 void Game::draw(RenderWindow& window){
   player.draw(window);
-  for(unsigned int i = 0; i < NUM_BULLETS; ++i)
-    bullets[i].draw(window);
+  for(unsigned int i = 0; i < NUM_BULLETS; ++i){
+    playerBullets[i].draw(window);
+    enemyBullets[i].draw(window);
+  }
+  for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
+    enemies[i].draw(window);
+  }
 }
 
 void Game::setWindowSize(unsigned int w, unsigned int h){

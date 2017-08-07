@@ -38,7 +38,7 @@ void Player::update(float ts){
 
   shootTimer = max(0.0f, shootTimer - ts);
   if(shootTimer == 0 && Keyboard::isKeyPressed(settings.shoot)){
-    game->spawnBullet(BULLET_SPAWN_DIST + getPos(), BULLET_SPAWN_DIR);
+    game->spawnPlayerBullet(BULLET_SPAWN_DIST + getPos(), BULLET_SPAWN_DIR);
     shootTimer = Player_ns::SHOOT_COOLDOWN;
   }
 }

@@ -23,8 +23,18 @@ int main(){
   Settings settings(Gc::SETTINGS_FILE);
   // for each frame
   while(window.isOpen()){
+
     Time delta = clock.restart();
+
     game.update(delta);
+
+    game.collisions();
+
+    //draw
+    window.clear(Color::Black);
+    game.draw(window);
+    window.display();
+
 
     // handle events within a frame
     Event e;
@@ -51,13 +61,6 @@ int main(){
         }
       }
     }
-
-    window.clear(Color::Black);
-
-    game.draw(window);
-
-    window.display();
-
   }
   return 0;
 }

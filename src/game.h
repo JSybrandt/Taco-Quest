@@ -7,6 +7,7 @@
 #include"constants.h"
 #include"player.h"
 #include"bullet.h"
+#include"enemy.h"
 
 using namespace sf;
 using std::cerr;
@@ -15,19 +16,22 @@ using std::endl;
 
 namespace Game_ns{
   const unsigned int NUM_BULLETS = 100;
+  const unsigned int NUM_ENEMIES = 100;
 };
 class Game{
 public:
   Game();
   ~Game();
   void update(Time delta);
+  void collisions();
   void draw(RenderWindow& window);
   void setWindowSize(unsigned int width, unsigned int height);
   void pause();
   void resume();
   const Settings& getSettings() const;
   Rect<float> getScreenRect() const;
-  void spawnBullet(Vector2f loc, Vector2f vel);
+  void spawnPlayerBullet(Vector2f loc, Vector2f vel);
+  void spawnEnemyBullet(Vector2f loc, Vector2f vel);
 
 private:
   void safeLoad(Texture & t, string path);
@@ -35,8 +39,10 @@ private:
   unsigned int screenWidth, screenHeight;
   Settings settings;
 
-  Texture blockTex, tacoTex, boltTex;
+  Texture blockTex, tacoTex, boltTex, burgerTex;
   Player player;
-  Bullet* bullets;
+  Bullet* playerBullets;
+  Bullet* enemyBullets;
+  Enemy* enemies;
 
 };

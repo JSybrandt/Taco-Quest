@@ -1,7 +1,9 @@
 #pragma once
 #include<SFML/System.hpp>
+#include<SFML/Graphics.hpp>
 #include<cmath>
 using sf::Vector2;
+using sf::Color;
 namespace Gc {
  extern const int SCREEN_WIDTH;
  extern const int SCREEN_HEIGHT;
@@ -10,10 +12,13 @@ namespace Gc {
  extern const char* IMG_BLOCK;
  extern const char* IMG_BOLT;
  extern const char* IMG_TACO;
+ extern const char* IMG_BURGER;
  extern const Vector2<float> UP;
  extern const Vector2<float> DOWN;
  extern const Vector2<float> LEFT;
  extern const Vector2<float> RIGHT;
+ extern const Color CLR_PLAYER_BULLET;
+ extern const Color CLR_ENEMY_BULLET;
 }
 
 template<class T>
