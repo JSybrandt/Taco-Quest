@@ -28,7 +28,7 @@ Game::Game():settings(Gc::SETTINGS_FILE){
 
   //spawn
   for(unsigned int i=0; i<10; ++i){
-    enemies[i].spawn(Vector2f(50*i+200, 50*i+100));
+    enemies[i].spawn(Vector2f(50*i+200, 50*i+100), 10);
   }
 }
 
@@ -57,7 +57,7 @@ void Game::collisions(){
     for(unsigned int j=0; j<NUM_ENEMIES; ++j){
       if(playerBullets[i].checkCollision(enemies[j])){
         playerBullets[i].die();
-        enemies[j].die();
+        enemies[j].hit();
       }
     }
   }
@@ -82,7 +82,6 @@ void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel){
 }
 
 void Game::draw(RenderWindow& window){
-  player.draw(window);
   for(unsigned int i = 0; i < NUM_BULLETS; ++i){
     playerBullets[i].draw(window);
     enemyBullets[i].draw(window);
@@ -90,6 +89,7 @@ void Game::draw(RenderWindow& window){
   for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
     enemies[i].draw(window);
   }
+  player.draw(window);
 }
 
 void Game::setWindowSize(unsigned int w, unsigned int h){

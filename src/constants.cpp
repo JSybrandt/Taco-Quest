@@ -14,4 +14,18 @@ namespace Gc {
   const Vector2<float> RIGHT(1, 0);
   const Color CLR_PLAYER_BULLET(0, 0, 255);
   const Color CLR_ENEMY_BULLET(255, 0, 0);
+  const Color BLACK = Color(0, 0, 0);
+  const Color WHITE = Color(255, 255, 255);
+  const Color RED = Color(255, 0, 0);
+  const Color GREEN = Color(0, 255, 0);
+  const Color BLUE = Color(0, 0, 255);
 }
+
+template<>
+Color interpolate<Color>(Color colorA, Color colorB, float scale){
+  unsigned short r = colorA.r * (1 - scale) + colorB.r * scale;
+  unsigned short g = colorA.g * (1 - scale) + colorB.g * scale;
+  unsigned short b = colorA.b * (1 - scale) + colorB.b * scale;
+  return Color(r, g, b);
+}
+

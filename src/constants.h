@@ -19,6 +19,11 @@ namespace Gc {
  extern const Vector2<float> RIGHT;
  extern const Color CLR_PLAYER_BULLET;
  extern const Color CLR_ENEMY_BULLET;
+ extern const Color BLACK;
+ extern const Color WHITE;
+ extern const Color RED;
+ extern const Color BLUE;
+ extern const Color GREEN;
 }
 
 template<class T>
@@ -43,3 +48,10 @@ T min(T a, T b){
     return a;
   else return b;
 }
+
+template<class T>
+T interpolate(T a, T b, float scale){
+  return a * (1 - scale) + b * scale;
+}
+
+template<> Color interpolate<Color>(Color colorA, Color colorB, float scale);

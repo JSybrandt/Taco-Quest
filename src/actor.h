@@ -3,6 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include<map>
 #include<cmath>
+#include"constants.h"
 using sf::Sprite;
 using sf::Texture;
 using sf::Time;
