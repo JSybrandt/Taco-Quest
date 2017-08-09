@@ -63,19 +63,19 @@ void Game::collisions(){
   }
 }
 
-void Game::spawnPlayerBullet(Vector2f loc, Vector2f vel){
+void Game::spawnPlayerBullet(Vector2f loc, Vector2f vel, PathData data){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     if(!playerBullets[i].isActive){
-      playerBullets[i].spawn(loc, vel);
+      playerBullets[i].spawn(loc, vel, data);
       break;
     }
   }
 }
 
-void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel){
+void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     if(!enemyBullets[i].isActive){
-      enemyBullets[i].spawn(loc, vel);
+      enemyBullets[i].spawn(loc, vel, data);
       break;
     }
   }

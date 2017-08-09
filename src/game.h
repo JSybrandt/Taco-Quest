@@ -30,8 +30,8 @@ public:
   void resume();
   const Settings& getSettings() const;
   Rect<float> getScreenRect() const;
-  void spawnPlayerBullet(Vector2f loc, Vector2f vel);
-  void spawnEnemyBullet(Vector2f loc, Vector2f vel);
+  void spawnPlayerBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
+  void spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
 
 private:
   void safeLoad(Texture & t, string path);

@@ -19,6 +19,7 @@ namespace Gc {
   const Color RED = Color(255, 0, 0);
   const Color GREEN = Color(0, 255, 0);
   const Color BLUE = Color(0, 0, 255);
+  const float PI = 3.14159265359;
 }
 
 template<>

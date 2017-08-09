@@ -24,6 +24,7 @@ namespace Gc {
  extern const Color RED;
  extern const Color BLUE;
  extern const Color GREEN;
+ extern const float PI;
 }
 
 template<class T>
@@ -55,3 +56,4 @@ T interpolate(T a, T b, float scale){
 }
 
 template<> Color interpolate<Color>(Color colorA, Color colorB, float scale);
+
