@@ -35,14 +35,16 @@ public:
 
 private:
   void safeLoad(Texture & t, string path);
+  void safeLoad(Font & f, string path);
   bool isPaused;
   unsigned int screenWidth, screenHeight;
   Settings settings;
 
-  Texture blockTex, tacoTex, boltTex, burgerTex;
+  Texture blockTex, tacoTex, boltTex, burgerTex, wideBoltTex;
   Player player;
   Bullet* playerBullets;
   Bullet* enemyBullets;
   Enemy* enemies;
+  Font debugFont;
 
 };

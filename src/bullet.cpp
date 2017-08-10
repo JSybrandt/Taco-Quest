@@ -3,17 +3,27 @@
 
 using namespace Gc;
 
-PathData::PathData(){type = PathType::Straight;}
-
-PathData::PathData(float amp, float period, bool neg){
-  type = PathType::Sin;
+PathData::PathData(){
+  this->pathType = Straight;
+  this->color = WHITE;
+  this->boltType = Circle;
+}
+PathData::PathData(Color color, BoltType type){
+  this->pathType = PathType::Straight;
+  this->color = color;
+  this->boltType = type;
+}
+PathData::PathData(Color color, float amp, float period, bool neg, BoltType type){
+  this->pathType = PathType::Sin;
+  this->boltType = type;
   this->amplitude = amp;
   this->period = period;
   this->sign = (neg ? -1 : 1);
+  this->color = color;
 }
 
 Vector2f PathData::getVelocity(float clock, Vector2f initVel){
-  switch(type){
+  switch(pathType){
     case Straight:
       return initVel;
     case Sin:
@@ -44,6 +54,15 @@ void Bullet::spawn(Vector2f pos, Vector2f vel, PathData data){
   setVel(vel);
   isActive = true;
   this->pathData = data;
+  Vector2f oldScale = this->getSprite().getScale();
+  this->getSprite().scale(1/oldScale.x, 1/oldScale.y);
+  switch(data.boltType){
+    case Circle:
+      this->getSprite().scale(Vector2f(1,1)); break;
+    case Wide:
+      this->getSprite().scale(Vector2f(1,2)); break;
+  }
+  this->getSprite().setColor(data.color);
 }
 
 void Bullet::setVel(Vector2f vel){
@@ -54,8 +73,7 @@ Vector2f Bullet::getVel(){
   return velocity;
 }
 
-void Bullet::init(Game* game, const Texture& texture, Color color){
+void Bullet::init(Game* game, const Texture& texture){
   Actor::init(game, texture);
-  this->getSprite().setColor(color);
 }
 

@@ -6,8 +6,10 @@ namespace Gc {
   const char* SETTINGS_FILE = "./settings.txt";
   const char* IMG_BLOCK = "./res/block.png";
   const char* IMG_BOLT = "./res/bolt.png";
+  const char* IMG_WIDE_BOLT = "./res/wideBolt.png";
   const char* IMG_TACO = "./res/taco.png";
   const char* IMG_BURGER = "./res/burger.png";
+  const char* FONT_ARIAL = "./res/arial.ttf";
   const Vector2<float> UP(0, -1);
   const Vector2<float> DOWN(0, 1);
   const Vector2<float> LEFT(-1, 0);

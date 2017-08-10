@@ -8,8 +8,7 @@ GAME_NAME=tacoQuest
 CPP_FILES := $(wildcard ./src/*.cpp)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 LD_FLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-CC_FLAGS := -Wall -g
-
+CC_FLAGS := -Wall -g -D DEBUG
 
 all: dirs $(GAME_NAME)
 

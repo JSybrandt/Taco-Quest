@@ -2,16 +2,22 @@
 #include"actor.h"
 
 using sf::Transform;
+using sf::Color;
 
 enum PathType{Straight, Sin};
+enum BoltType{Circle, Wide};
+
 struct PathData{
   PathData();
-  PathData(float amp, float freq, bool neg = false);
+  PathData(Color color, BoltType type = Circle);
+  PathData(Color color, float amp, float freq, bool neg = false, BoltType type = Circle);
   Vector2f getVelocity(float clock, Vector2f initVel);
-  PathType type;
+  PathType pathType;
+  BoltType boltType;
   float amplitude;
   float period;
   float sign;
+  Color color;
 };
 
 class Bullet: public Actor{
@@ -21,7 +27,7 @@ public:
   void setVel(Vector2f vel);
   Vector2f getVel();
   void spawn(Vector2f pos, Vector2f vel, PathData data);
-  void init(Game* game, const Texture& texture, Color color);
+  void init(Game* game, const Texture& texture);
 private:
   Vector2f velocity;
   PathData pathData;
