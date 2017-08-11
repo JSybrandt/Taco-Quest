@@ -90,8 +90,13 @@ void Player::levelDown(){
 
 // one in front
 void Player::shootL0(){
+  static const float MAX_ANGLE=5;
+  static const int PERIOD=2;
+  static unsigned int shotClock = 0;
+  shotClock++;
+  float deg = MAX_ANGLE * sin(shotClock/float(PERIOD));
   Transform transform;
-  transform.rotate(rand01()-0.5 * 30);
+  transform.rotate(deg);
   game->spawnPlayerBullet(getPos(),
                           (transform * RIGHT) * SHOOT_SPEEDS[shootLevel],
                           PathData(SHOOT_COLORS[shootLevel])

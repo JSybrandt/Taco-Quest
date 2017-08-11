@@ -17,7 +17,5 @@ void Burger::update(float ts){
 }
 
 void Burger::shoot(){
-  Transform trans;
-  trans.scale(10, 10);
-  game->spawnEnemyBullet(getPos(), trans * LEFT, PathData(RED));
+  game->spawnEnemyBullet(getPos(), LEFT * 5.0f, PathData(RED));
 }
