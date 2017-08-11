@@ -8,6 +8,7 @@
 #include"player.h"
 #include"bullet.h"
 #include"enemy.h"
+#include"burger.h"
 
 using namespace sf;
 using std::cerr;
@@ -32,6 +33,7 @@ public:
   Rect<float> getScreenRect() const;
   void spawnPlayerBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
   void spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
+  void spawnBurger(Vector2f loc);
 
 private:
   void safeLoad(Texture & t, string path);
@@ -44,7 +46,7 @@ private:
   Player player;
   Bullet* playerBullets;
   Bullet* enemyBullets;
-  Enemy* enemies;
+  Burger* burgers;
   Font debugFont;
 
 };

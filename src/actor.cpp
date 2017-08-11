@@ -103,3 +103,13 @@ pair<Vector2f, float> Actor::getSphere() const{
   float r = min(rect.height, rect.width)/2;
   return pair<Vector2f, float>(Vector2f(x, y), r);
 }
+
+bool Actor::isOnScreen(){
+  const static float SCREEN_MARGIN = 50;
+  Rect<float> screenRect = game->getScreenRect();
+  screenRect.left -= SCREEN_MARGIN;
+  screenRect.top -= SCREEN_MARGIN;
+  screenRect.width += 2*SCREEN_MARGIN;
+  screenRect.height += 2*SCREEN_MARGIN;
+  return screenRect.contains(getPos());
+}

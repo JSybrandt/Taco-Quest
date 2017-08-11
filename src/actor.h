@@ -31,10 +31,7 @@ public:
   Vector2f getPos() const;
   void setPos(Vector2f pos);
   void move(Vector2f pos);
-  template <class T>
-  bool inside(Rect<T> r){
-    return r.contains(sprite.getPosition());
-  };
+  bool isOnScreen();
   void die();
   bool isActive;
   bool isInit;

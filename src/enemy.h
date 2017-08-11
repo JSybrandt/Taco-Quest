@@ -1,8 +1,13 @@
 #pragma once
 #include"actor.h"
+#ifdef DEBUG
+#include<iostream>
+using std::cout;
+using std::endl;
+#endif
 
 namespace Enemy_ns{
-  const float FLASH_TIME = 0.1;
+  const float FLASH_COOLDOWN = 0.1;
   const Color CLR_FLASH = Gc::RED;
 };
 
@@ -12,9 +17,13 @@ public:
   virtual void update(float ts);
   void spawn(Vector2f loc, unsigned int health);
   void hit();
-private:
+  virtual void shoot() = 0;
+protected:
   unsigned int health, maxHealth;
-  float flashCooldown;
+  float flashTimer;
+  float shootTimer;
+  float shotCooldown;
+  float shotProb;
   Color healthyColor;
-
+  void setDefVals();
 };

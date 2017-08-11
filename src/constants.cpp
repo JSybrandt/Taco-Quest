@@ -32,3 +32,6 @@ Color interpolate<Color>(Color colorA, Color colorB, float scale){
   return Color(r, g, b);
 }
 
+float rand01(){
+  return (rand() % 1000) / 1000.0f;
+}

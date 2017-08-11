@@ -12,7 +12,7 @@ Game::Game():settings(Gc::SETTINGS_FILE){
   // Data:
   playerBullets = new Bullet[NUM_BULLETS];
   enemyBullets = new Bullet[NUM_BULLETS];
-  enemies = new Enemy[NUM_ENEMIES];
+  burgers = new Burger[NUM_ENEMIES];
   // Tex:
   safeLoad(blockTex, Gc::IMG_BLOCK);
   safeLoad(boltTex, Gc::IMG_BOLT);
@@ -30,12 +30,7 @@ Game::Game():settings(Gc::SETTINGS_FILE){
     enemyBullets[i].init(this, boltTex);
   }
   for(unsigned int i=0; i<NUM_ENEMIES; ++i){
-    enemies[i].init(this, burgerTex);
-  }
-
-  //spawn
-  for(unsigned int i=0; i<10; ++i){
-    enemies[i].spawn(Vector2f(50*i+200, 50*i+100), i+1);
+    burgers[i].init(this, burgerTex);
   }
 
   // font
@@ -45,7 +40,7 @@ Game::Game():settings(Gc::SETTINGS_FILE){
 Game::~Game(){
   delete [] playerBullets;
   delete [] enemyBullets;
-  delete [] enemies;
+  delete [] burgers;
 }
 
 void Game::update(Time delta){
@@ -58,17 +53,36 @@ void Game::update(Time delta){
     enemyBullets[i].update(ts);
   }
   for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
-    enemies[i].update(ts);
+    burgers[i].update(ts);
+  }
+
+  static float spawnCooldown = 0;
+  spawnCooldown = max(0.0f, spawnCooldown - ts);
+  if(spawnCooldown == 0){
+    if(rand01() < 0.25){
+      spawnBurger(Vector2f(screenWidth * (0.5 + rand01()/2),
+                           screenHeight * rand01()));
+    }
+    spawnCooldown = 0.5;
   }
 }
 
 void Game::collisions(){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     for(unsigned int j=0; j<NUM_ENEMIES; ++j){
-      if(playerBullets[i].checkCollision(enemies[j])){
+      if(playerBullets[i].checkCollision(burgers[j])){
         playerBullets[i].hit();
-        enemies[j].hit();
+        burgers[j].hit();
       }
+    }
+  }
+}
+
+void Game::spawnBurger(Vector2f loc){
+  for(unsigned int i=0; i<NUM_ENEMIES; ++i){
+    if(!burgers[i].isActive){
+      burgers[i].spawn(loc);
+      break;
     }
   }
 }
@@ -92,12 +106,12 @@ void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data){
 }
 
 void Game::draw(RenderWindow& window){
+  for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
+    burgers[i].draw(window);
+  }
   for(unsigned int i = 0; i < NUM_BULLETS; ++i){
     playerBullets[i].draw(window);
     enemyBullets[i].draw(window);
-  }
-  for(unsigned int i = 0; i < NUM_ENEMIES; ++i){
-    enemies[i].draw(window);
   }
   player.draw(window);
 

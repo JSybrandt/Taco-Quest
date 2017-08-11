@@ -4,19 +4,36 @@ using namespace Gc;
 using namespace Enemy_ns;
 
 Enemy::Enemy():Actor(){
-  flashCooldown = 0;
-  healthyColor = WHITE;
+  setDefVals();
 };
 
+void Enemy::setDefVals(){
+  flashTimer = 0;
+  shootTimer = 0;
+  shotCooldown = 1;
+  shotProb = 1;
+  healthyColor = WHITE;
+  getSprite().setColor(WHITE);
+}
+
 void Enemy::update(float ts){
-  flashCooldown = max(0.0f, flashCooldown - ts);
+  if(!isActive)
+    return;
+  flashTimer = max(0.0f, flashTimer - ts);
+  shootTimer = max(0.0f, shootTimer - ts);
   getSprite().setColor(interpolate(healthyColor,
                                    CLR_FLASH,
-                                   flashCooldown / FLASH_TIME));
+                                   flashTimer / FLASH_COOLDOWN));
+  if(shootTimer == 0){
+    if(rand01()  < shotProb)
+      shoot();
+    shootTimer += shotCooldown;
+  }
 }
 
 void Enemy::spawn(Vector2f loc, unsigned int health){
   isActive = true;
+  setDefVals();
   setPos(loc);
   this->health = health;
   this->maxHealth = health;
@@ -24,9 +41,10 @@ void Enemy::spawn(Vector2f loc, unsigned int health){
 
 void Enemy::hit(){
   health--;
-  flashCooldown = FLASH_TIME;
+  flashTimer = FLASH_COOLDOWN;
   healthyColor = interpolate(BLACK, WHITE, health / float(maxHealth));
   if(health == 0){
     die();
   }
 }
+

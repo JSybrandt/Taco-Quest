@@ -59,3 +59,4 @@ T interpolate(T a, T b, float scale){
 
 template<> Color interpolate<Color>(Color colorA, Color colorB, float scale);
 
+float rand01();
