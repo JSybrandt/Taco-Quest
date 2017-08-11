@@ -90,8 +90,10 @@ void Player::levelDown(){
 
 // one in front
 void Player::shootL0(){
+  Transform transform;
+  transform.rotate(rand01()-0.5 * 30);
   game->spawnPlayerBullet(getPos(),
-                          RIGHT * SHOOT_SPEEDS[shootLevel],
+                          (transform * RIGHT) * SHOOT_SPEEDS[shootLevel],
                           PathData(SHOOT_COLORS[shootLevel])
                          );
 }
