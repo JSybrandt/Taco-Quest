@@ -35,7 +35,7 @@ Game::Game():settings(Gc::SETTINGS_FILE){
 
   //spawn
   for(unsigned int i=0; i<10; ++i){
-    enemies[i].spawn(Vector2f(50*i+200, 50*i+100), 10);
+    enemies[i].spawn(Vector2f(50*i+200, 50*i+100), i+1);
   }
 
   // font
@@ -66,7 +66,7 @@ void Game::collisions(){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     for(unsigned int j=0; j<NUM_ENEMIES; ++j){
       if(playerBullets[i].checkCollision(enemies[j])){
-        playerBullets[i].die();
+        playerBullets[i].hit();
         enemies[j].hit();
       }
     }

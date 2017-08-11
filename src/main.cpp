@@ -13,7 +13,7 @@ int main(){
   RenderWindow window(VideoMode(Gc::SCREEN_WIDTH,
                                 Gc::SCREEN_HEIGHT),
                       Gc::TITLE,
-                      Style::Default);
+                      Style::Default | Style::Fullscreen);
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(60);
   window.setKeyRepeatEnabled(false);

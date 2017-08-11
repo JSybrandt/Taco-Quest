@@ -58,6 +58,7 @@ void Player::update(float ts){
       case 2: shootL2(); break;
       case 3: shootL3(); break;
       case 4: shootL4(); break;
+      case 5: shootL5(); break;
       default: shootL0();
                cerr << "INVALID SHOOT LEVEL" << endl;
                break;
@@ -98,36 +99,74 @@ void Player::shootL0(){
 
 void Player::shootL1(){
   static bool alt = false;
-  Transform transform;
-  transform.scale(20, 20);
-
-  if(alt)
-    game->spawnPlayerBullet(getPos() + transform * UP,
-                            RIGHT * SHOOT_SPEEDS[shootLevel] + UP,
-                            PathData(SHOOT_COLORS[shootLevel])
-                           );
-  else
-    game->spawnPlayerBullet(getPos() + transform * DOWN,
-                            RIGHT * SHOOT_SPEEDS[shootLevel] + DOWN,
-                            PathData(SHOOT_COLORS[shootLevel])
-                           );
+  static const float DEG = 25;
   alt = !alt;
+  Transform transform;
+  transform.rotate(DEG * (alt?1:-1));
+
+  game->spawnPlayerBullet(getPos(),
+    RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel]));
+
+  game->spawnPlayerBullet(getPos(),
+    transform * RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel]));
 }
 
 void Player::shootL2(){
+  static const float AMP = 0.3;
+  static const float PERIOD = 0.8;
   game->spawnPlayerBullet(getPos(),
                           RIGHT * SHOOT_SPEEDS[shootLevel],
                           PathData(SHOOT_COLORS[shootLevel], Wide));
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
 }
 
 void Player::shootL3(){
-  shootL1();
   shootL2();
+  shootL1();
 }
 
 void Player::shootL4(){
-  game->spawnPlayerBullet(getPos(),
-                          RIGHT * SHOOT_SPEEDS[shootLevel]);
+  static unsigned int shotClock = 0;
+  static const float AMP = 0.5;
+  static const float PERIOD = 1;
+
+  shotClock++;
+
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
+  if(shotClock % 4 == 0)
+    game->spawnPlayerBullet(getPos(),
+      RIGHT * (SHOOT_SPEEDS[shootLevel] / 2),
+      PathData(SHOOT_COLORS[shootLevel], Big));
+}
+
+void Player::shootL5(){
+  static unsigned int shotClock = 0;
+  static const float AMP = 0.2;
+  static const float PERIOD = 0.7;
+  shotClock++;
+
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
+  game->spawnPlayerBullet(
+    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
+    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
+  if(shotClock % 3)
+    game->spawnPlayerBullet(getPos(),
+      LEFT * (SHOOT_SPEEDS[shootLevel] / 2),
+      PathData(SHOOT_COLORS[shootLevel]));
 }
 
 unsigned int Player::getShootLevel(){

@@ -38,13 +38,15 @@ Vector2f PathData::getVelocity(float clock, Vector2f initVel){
 
 Bullet::Bullet(){
   isActive = false;
+  health = 0;
 }
 
 void Bullet::update(float ts){
   if(isActive){
     travelClock += ts;
     move(pathData.getVelocity(travelClock, velocity));
-    isActive = this->inside(game->getScreenRect());
+    float x = this->getPos().x;
+    isActive = x > 0 && x < game->getScreenRect().width;
   }
 }
 
@@ -56,11 +58,15 @@ void Bullet::spawn(Vector2f pos, Vector2f vel, PathData data){
   this->pathData = data;
   Vector2f oldScale = this->getSprite().getScale();
   this->getSprite().scale(1/oldScale.x, 1/oldScale.y);
+  health = 1;
   switch(data.boltType){
     case Circle:
       this->getSprite().scale(Vector2f(1,1)); break;
     case Wide:
       this->getSprite().scale(Vector2f(1,2)); break;
+    case Big:
+      this->getSprite().scale(Vector2f(5,5));
+      health = 5; break;
   }
   this->getSprite().setColor(data.color);
 }
@@ -77,3 +83,8 @@ void Bullet::init(Game* game, const Texture& texture){
   Actor::init(game, texture);
 }
 
+void Bullet::hit(){
+  health--;
+  if(health == 0)
+    die();
+}

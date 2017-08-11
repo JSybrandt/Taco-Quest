@@ -10,7 +10,7 @@ OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 LD_FLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CC_FLAGS := -Wall -g -D DEBUG
 
-all: dirs $(GAME_NAME)
+all: clean dirs $(GAME_NAME)
 
 $(GAME_NAME): $(OBJ_FILES)
 	$(CC) $(LD_FLAGS) -o $@ $^
