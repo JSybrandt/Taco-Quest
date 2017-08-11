@@ -29,6 +29,8 @@ public:
   void levelUp();
   void levelDown();
   unsigned int getShootLevel();
+  void hit();
+  void die();
 private:
   void keepOnScreen();
   void shootL0();

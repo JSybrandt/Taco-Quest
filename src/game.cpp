@@ -75,6 +75,9 @@ void Game::collisions(){
         burgers[j].hit();
       }
     }
+    if(enemyBullets[i].checkCollision(player)){
+      player.hit();
+    }
   }
 }
 

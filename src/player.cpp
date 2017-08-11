@@ -172,3 +172,6 @@ void Player::shootL5(){
 unsigned int Player::getShootLevel(){
   return shootLevel;
 }
+
+void Player::hit(){die();}
+void Player::die(){isActive = false;}
