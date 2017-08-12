@@ -56,15 +56,24 @@ void Game::update(Time delta){
     burgers[i].update(ts);
   }
 
-  static float spawnCooldown = 0;
-  spawnCooldown = max(0.0f, spawnCooldown - ts);
-  if(spawnCooldown == 0){
-    if(rand01() < 0.25){
-      spawnBurger(Vector2f(screenWidth * (0.5 + rand01()/2),
-                           screenHeight * rand01()));
+  static bool spawnButt = false;
+  if(Keyboard::isKeyPressed(Keyboard::Key::B)){
+    if(!spawnButt){
+      spawnButt = true;
+      spawnBurger(Vector2f(screenWidth*0.8, screenHeight/2));
     }
-    spawnCooldown = 0.5;
+  } else {
+    spawnButt = false;
   }
+//  static float spawnCooldown = 0;
+//  spawnCooldown = max(0.0f, spawnCooldown - ts);
+//  if(spawnCooldown == 0){
+//    if(rand01() < 0.25){
+//      spawnBurger(Vector2f(screenWidth * (0.5 + rand01()/2),
+//                           screenHeight * rand01()));
+//    }
+//    spawnCooldown = 0.5;
+//  }
 }
 
 void Game::collisions(){
@@ -75,9 +84,11 @@ void Game::collisions(){
         burgers[j].hit();
       }
     }
+#ifndef DEBUG
     if(enemyBullets[i].checkCollision(player)){
       player.hit();
     }
+#endif
   }
 }
 

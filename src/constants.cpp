@@ -14,6 +14,7 @@ namespace Gc {
   const Vector2<float> DOWN(0, 1);
   const Vector2<float> LEFT(-1, 0);
   const Vector2<float> RIGHT(1, 0);
+  const Vector2<float> ZERO(0, 0);
   const Color CLR_PLAYER_BULLET(0, 0, 255);
   const Color CLR_ENEMY_BULLET(255, 0, 0);
   const Color BLACK = Color(0, 0, 0);
@@ -22,6 +23,9 @@ namespace Gc {
   const Color GREEN = Color(0, 255, 0);
   const Color BLUE = Color(0, 0, 255);
   const float PI = 3.14159265359;
+  const float EPS = 1E-4;
+  const float EPS_SQRD = EPS * EPS;
+  const float EPS_PATH = 20;
 }
 
 template<>

@@ -14,6 +14,7 @@ void Enemy::setDefVals(){
   shotProb = 1;
   healthyColor = WHITE;
   getSprite().setColor(WHITE);
+  speed = 1;
 }
 
 void Enemy::update(float ts){
@@ -29,14 +30,19 @@ void Enemy::update(float ts){
       shoot();
     shootTimer += shotCooldown;
   }
+
+  move(travelPath->getNewVel(getPos(), speed, ts));
+  if(travelPath->isPathingFinished())
+    isActive = false;
 }
 
-void Enemy::spawn(Vector2f loc, unsigned int health){
+void Enemy::spawn(Vector2f loc, unsigned int health, TravelPath& path){
   isActive = true;
   setDefVals();
   setPos(loc);
   this->health = health;
   this->maxHealth = health;
+  this->travelPath = &path;
 }
 
 void Enemy::hit(){

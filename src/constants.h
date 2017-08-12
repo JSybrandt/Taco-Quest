@@ -4,6 +4,13 @@
 #include<cmath>
 using sf::Vector2;
 using sf::Color;
+
+#ifdef DEBUG
+#include<iostream>
+using std::cout;
+using std::endl;
+#endif
+
 namespace Gc {
  extern const int SCREEN_WIDTH;
  extern const int SCREEN_HEIGHT;
@@ -19,6 +26,7 @@ namespace Gc {
  extern const Vector2<float> DOWN;
  extern const Vector2<float> LEFT;
  extern const Vector2<float> RIGHT;
+ extern const Vector2<float> ZERO;
  extern const Color CLR_PLAYER_BULLET;
  extern const Color CLR_ENEMY_BULLET;
  extern const Color BLACK;
@@ -27,6 +35,9 @@ namespace Gc {
  extern const Color BLUE;
  extern const Color GREEN;
  extern const float PI;
+ extern const float EPS;
+ extern const float EPS_PATH;
+ extern const float EPS_SQRD;
 }
 
 template<class T>
@@ -55,6 +66,11 @@ T min(T a, T b){
 template<class T>
 T interpolate(T a, T b, float scale){
   return a * (1 - scale) + b * scale;
+}
+
+template<class T>
+Vector2<T> normalize(Vector2<T> v){
+  return v / vecLength<T>(v);
 }
 
 template<> Color interpolate<Color>(Color colorA, Color colorB, float scale);

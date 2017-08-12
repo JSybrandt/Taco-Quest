@@ -8,7 +8,7 @@ using sf::Keyboard;
 class Game;
 
 namespace Player_ns{
-  const float SPEED = 10;
+  const float SPEED = 600;
   const unsigned int NUM_SHOOT_LEVELS = 6;
   const float SHOOT_COOLDOWNS[NUM_SHOOT_LEVELS] = {0.2, 0.2, 0.2, 0.2, 0.2, 0.1};
   const float SHOOT_SPEEDS[NUM_SHOOT_LEVELS] = {12, 12, 16, 16, 22, 20};

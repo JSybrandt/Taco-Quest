@@ -44,8 +44,7 @@ void Player::update(float ts){
     input += Gc::RIGHT;
   }
   if (input != Vector2f(0,0)){
-    input /= vecLength(input);
-    Vector2f vel = input * SPEED;
+    Vector2f vel = normalize(input) * SPEED * ts;
     getSprite().move(vel);
   }
   keepOnScreen();
