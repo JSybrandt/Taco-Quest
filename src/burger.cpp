@@ -22,11 +22,13 @@ void Burger::shoot(){
 }
 
 void Burger::spawn(Vector2f loc){
-  Rect<float> r = game->getScreenRect();
-  static Vector2f v[] = {Vector2f(r.width, r.height),
-                  Vector2f(r.width/2, r.height),
-                  Vector2f(r.width/2, r.height/2),
-                  Vector2f(0, r.height/2)};
-  this-> travelPath = WaypointPath(v, 4);
+//  Rect<float> r = game->getScreenRect();
+//  static Vector2f v[] = {Vector2f(r.width, r.height),
+//                  Vector2f(r.width/2, r.height),
+//                  Vector2f(r.width/2, r.height/2),
+//                  Vector2f(0, r.height/2)};
+//  this->travelPath = WaypointPath(v, 4);
+
+  this->travelPath = SinPath(LEFT, 10, 1);
   Enemy::spawn(loc, MAX_HEALTH, this->travelPath);
 }

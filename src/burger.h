@@ -14,6 +14,6 @@ public:
   virtual void update(float ts);
   void shoot();
 protected:
-  WaypointPath travelPath;
+  SinPath travelPath;
   virtual void setDefVals();
 };
