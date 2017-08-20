@@ -39,13 +39,13 @@ void Enemy::update(float ts){
   }
 }
 
-void Enemy::spawn(Vector2f loc, unsigned int health, TravelPath& path){
+void Enemy::spawn(Vector2f loc, unsigned int health, shared_ptr<TravelPath> path){
   isActive = true;
   setDefVals();
   setPos(loc);
   this->health = health;
   this->maxHealth = health;
-  this->travelPath = &path;
+  this->travelPath = path;
 }
 
 void Enemy::hit(){

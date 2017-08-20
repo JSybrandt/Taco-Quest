@@ -9,6 +9,7 @@
 #include"bullet.h"
 #include"enemy.h"
 #include"burger.h"
+#include"travelPath.h"
 
 using namespace sf;
 using std::cerr;
@@ -31,8 +32,16 @@ public:
   void resume();
   const Settings& getSettings() const;
   Rect<float> getScreenRect() const;
-  void spawnPlayerBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
-  void spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data=PathData());
+  void spawnPlayerBullet(Vector2f loc,
+                         float speed,
+                         shared_ptr<TravelPath> path,
+                         Color color,
+                         BoltType type = Circle);
+  void spawnEnemyBullet(Vector2f loc,
+                        float speed,
+                        shared_ptr<TravelPath> path,
+                        Color color,
+                        BoltType type = Circle);
   void spawnBurger(Vector2f loc);
 
 private:

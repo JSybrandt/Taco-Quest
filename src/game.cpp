@@ -101,19 +101,29 @@ void Game::spawnBurger(Vector2f loc){
   }
 }
 
-void Game::spawnPlayerBullet(Vector2f loc, Vector2f vel, PathData data){
+void Game::spawnPlayerBullet(
+    Vector2f loc,
+    float speed,
+    shared_ptr<TravelPath> path,
+    Color color,
+    BoltType type){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     if(!playerBullets[i].isActive){
-      playerBullets[i].spawn(loc, vel, data);
+      playerBullets[i].spawn(loc, speed, path, color, type);
       break;
     }
   }
 }
 
-void Game::spawnEnemyBullet(Vector2f loc, Vector2f vel, PathData data){
+void Game::spawnEnemyBullet(
+    Vector2f loc,
+    float speed,
+    shared_ptr<TravelPath> path,
+    Color color,
+    BoltType type){
   for(unsigned int i=0; i<NUM_BULLETS; ++i){
     if(!enemyBullets[i].isActive){
-      enemyBullets[i].spawn(loc, vel, data);
+      enemyBullets[i].spawn(loc, speed, path, color, type);
       break;
     }
   }

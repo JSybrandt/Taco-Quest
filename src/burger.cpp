@@ -18,7 +18,10 @@ void Burger::update(float ts){
 }
 
 void Burger::shoot(){
-  game->spawnEnemyBullet(getPos(), LEFT * 5.0f, PathData(RED));
+  game->spawnEnemyBullet(getPos(),
+      5.0f,
+      make_shared<StraightPath>(LEFT),
+      RED);
 }
 
 void Burger::spawn(Vector2f loc){
@@ -29,6 +32,5 @@ void Burger::spawn(Vector2f loc){
 //                  Vector2f(0, r.height/2)};
 //  this->travelPath = WaypointPath(v, 4);
 
-  this->travelPath = SinPath(LEFT, 10, 1);
-  Enemy::spawn(loc, MAX_HEALTH, this->travelPath);
+  Enemy::spawn(loc, MAX_HEALTH, make_shared<SinPath>(SinPath(LEFT, 10, 1)));
 }

@@ -89,17 +89,18 @@ void Player::levelDown(){
 
 // one in front
 void Player::shootL0(){
-  static const float MAX_ANGLE=5;
-  static const int PERIOD=2;
-  static unsigned int shotClock = 0;
-  shotClock++;
-  float deg = MAX_ANGLE * sin(shotClock/float(PERIOD));
-  Transform transform;
-  transform.rotate(deg);
-  game->spawnPlayerBullet(getPos(),
-                          (transform * RIGHT) * SHOOT_SPEEDS[shootLevel],
-                          PathData(SHOOT_COLORS[shootLevel])
-                         );
+//  static const float MAX_ANGLE=5;
+//  static const int PERIOD=2;
+//  static unsigned int shotClock = 0;
+//  shotClock++;
+//  float deg = MAX_ANGLE * sin(shotClock/float(PERIOD));
+//  Transform transform;
+//  transform.rotate(deg);
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<StraightPath>(StraightPath(RIGHT)),
+      SHOOT_COLORS[shootLevel]);
 }
 
 
@@ -109,28 +110,42 @@ void Player::shootL1(){
   alt = !alt;
   Transform transform;
   transform.rotate(DEG * (alt?1:-1));
-
-  game->spawnPlayerBullet(getPos(),
-    RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel]));
-
-  game->spawnPlayerBullet(getPos(),
-    transform * RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel]));
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<StraightPath>(
+        StraightPath(transform * RIGHT)),
+      SHOOT_COLORS[shootLevel]);
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<StraightPath>(
+        StraightPath(RIGHT)),
+      SHOOT_COLORS[shootLevel]);
 }
 
 void Player::shootL2(){
-  static const float AMP = 0.3;
+  static const float AMP = 2;
   static const float PERIOD = 0.8;
-  game->spawnPlayerBullet(getPos(),
-                          RIGHT * SHOOT_SPEEDS[shootLevel],
-                          PathData(SHOOT_COLORS[shootLevel], Wide));
   game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<StraightPath>(
+        StraightPath(RIGHT)),
+      SHOOT_COLORS[shootLevel],
+      Wide);
   game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, true)),
+      SHOOT_COLORS[shootLevel]);
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, false)),
+      SHOOT_COLORS[shootLevel]);
 }
 
 void Player::shootL3(){
@@ -144,17 +159,27 @@ void Player::shootL4(){
   static const float PERIOD = 1;
 
   shotClock++;
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, true)),
+      SHOOT_COLORS[shootLevel]);
+  game->spawnPlayerBullet(
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, false)),
+      SHOOT_COLORS[shootLevel]);
 
-  game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
-  game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
   if(shotClock % 4 == 0)
-    game->spawnPlayerBullet(getPos(),
-      RIGHT * (SHOOT_SPEEDS[shootLevel] / 2),
-      PathData(SHOOT_COLORS[shootLevel], Big));
+    game->spawnPlayerBullet(
+        getPos(),
+        SHOOT_SPEEDS[shootLevel] / 2,
+        make_shared<StraightPath>(
+          StraightPath(RIGHT)),
+        SHOOT_COLORS[shootLevel],
+        Big);
 }
 
 void Player::shootL5(){
@@ -164,15 +189,24 @@ void Player::shootL5(){
   shotClock++;
 
   game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, true));
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, true)),
+      SHOOT_COLORS[shootLevel]);
   game->spawnPlayerBullet(
-    getPos(), RIGHT * SHOOT_SPEEDS[shootLevel],
-    PathData(SHOOT_COLORS[shootLevel], AMP, PERIOD, false));
+      getPos(),
+      SHOOT_SPEEDS[shootLevel],
+      make_shared<SinPath>(
+        SinPath(RIGHT, AMP, PERIOD, false)),
+      SHOOT_COLORS[shootLevel]);
   if(shotClock % 3)
-    game->spawnPlayerBullet(getPos(),
-      LEFT * (SHOOT_SPEEDS[shootLevel] / 2),
-      PathData(SHOOT_COLORS[shootLevel]));
+    game->spawnPlayerBullet(
+        getPos(),
+        SHOOT_SPEEDS[shootLevel],
+        make_shared<StraightPath>(
+          StraightPath(LEFT)),
+        SHOOT_COLORS[shootLevel]);
 }
 
 unsigned int Player::getShootLevel(){

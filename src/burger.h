@@ -14,6 +14,6 @@ public:
   virtual void update(float ts);
   void shoot();
 protected:
-  SinPath travelPath;
+  shared_ptr<TravelPath> travelPath;
   virtual void setDefVals();
 };

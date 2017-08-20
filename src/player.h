@@ -1,9 +1,12 @@
 #pragma once
 
 #include<SFML/System.hpp>
+#include<memory>
 #include"actor.h"
 
 using sf::Keyboard;
+using std::shared_ptr;
+using std::make_shared;
 
 class Game;
 
@@ -11,7 +14,13 @@ namespace Player_ns{
   const float SPEED = 600;
   const unsigned int NUM_SHOOT_LEVELS = 6;
   const float SHOOT_COOLDOWNS[NUM_SHOOT_LEVELS] = {0.2, 0.2, 0.2, 0.2, 0.2, 0.1};
-  const float SHOOT_SPEEDS[NUM_SHOOT_LEVELS] = {12, 12, 16, 16, 22, 20};
+  const float SHOOT_SPEEDS[NUM_SHOOT_LEVELS] = {
+    240,
+    240,
+    320,
+    320,
+    440,
+    400};
   const Color SHOOT_COLORS[NUM_SHOOT_LEVELS] = {
     Color(0xE8, 0xA5, 0x3C), // 0
     Color(0xD3, 0x69, 0x30), // 1
