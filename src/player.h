@@ -20,7 +20,7 @@ namespace Player_ns{
     320,
     320,
     440,
-    400};
+    500};
   const Color SHOOT_COLORS[NUM_SHOOT_LEVELS] = {
     Color(0xE8, 0xA5, 0x3C), // 0
     Color(0xD3, 0x69, 0x30), // 1

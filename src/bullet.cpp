@@ -14,7 +14,11 @@ Bullet::Bullet(){
 void Bullet::update(float ts){
   if(isActive && travelPath){
     float x = this->getPos().x;
-    isActive = x > 0 && x < game->getScreenRect().width;
+    float y = this->getPos().y;
+    isActive = x > 0 &&
+               x < game->getScreenRect().width &&
+               y > 0 &&
+               y < game->getScreenRect().height;
     move(travelPath->getNewVel(getPos(), this->speed, ts));
   }
 }
